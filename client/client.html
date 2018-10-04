@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+  <title>Wilson D&D Character Creator</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+    var characterList;
+    var inventory;
+    const parseJSON = (xhr, content) => {
+        const obj = JSON.parse(xhr.response);
+        //console.dir(obj);
+        
+        if (obj.message) {
+            content.innerHTML = content.innerHTML + `<p>Message: ${obj.message}</p>`;
+        }
+        
+        if (obj.characters) {
+            let characters = obj.characters;
+            characterList = obj.characters;
+            //console.dir(characters);
+            const charSelect = document.querySelector('#characterSelect');
+            
+            for (let x in characters) {
+                if (!document.getElementById(x)) {
+                    let el = document.createElement("option");
+                    el.text = x;
+                    el.value = x;
+                    el.id = x;
+                    charSelect.add(el);
+                }
+            }
+            
+            const nameField = nameForm.querySelector('#nameField');
+            nameField.value = characters[charSelect.value].name;
+            
+            const strField = nameForm.querySelector('#strField');
+            strField.value = characters[charSelect.value].str;
+            
+            const dexField = nameForm.querySelector('#dexField');
+            dexField.value = characters[charSelect.value].dex;
+            
+            const conField = nameForm.querySelector('#conField');
+            conField.value = characters[charSelect.value].con;
+            
+            const intField = nameForm.querySelector('#intField');
+            intField.value = characters[charSelect.value].int;
+            
+            const wisField = nameForm.querySelector('#wisField');
+            wisField.value = characters[charSelect.value].wis;
+            
+            const chaField = nameForm.querySelector('#chaField');
+            chaField.value = characters[charSelect.value].cha;
+            
+            const maxHpField = nameForm.querySelector('#maxHpField');
+            maxHpField.value = characters[charSelect.value].maxHp;
+            
+            const curHpField = nameForm.querySelector('#curHpField');
+            curHpField.value = characters[charSelect.value].curHp;
+            
+            const acField = nameForm.querySelector('#acField');
+            acField.value = characters[charSelect.value].ac;
+            
+            const initField = nameForm.querySelector('#initField');
+            initField.value = characters[charSelect.value].init;
+            
+            const speedField = nameForm.querySelector('#speedField');
+            speedField.value = characters[charSelect.value].speed;
+            
+            const classField = nameForm.querySelector('#classField');
+            classField.value = characters[charSelect.value].class;
+            
+            const lvlField = nameForm.querySelector('#lvlField');
+            lvlField.value = characters[charSelect.value].lvl;
+            
+            const raceField = nameForm.querySelector('#raceField');
+            raceField.value = characters[charSelect.value].race;
+            
+            const alignField = nameForm.querySelector('#alignField');
+            alignField.value = characters[charSelect.value].align;
+            
+            const invList = document.querySelector('#invList');
+            
+            while (invList.firstChild) {
+                invList.removeChild(invList.firstChild);
+            }
+            
+            if (typeof characters[charSelect.value].inventory === "string") {
+                addItemSpecific(characters[charSelect.value].inventory);
+            }
+            else {
+                for (let c = 0; c < characters[charSelect.value].inventory.length; c++) {
+                    addItemSpecific(characters[charSelect.value].inventory[c]);
+                }
+            }
+            
+            const weapList = document.querySelector('#weapList');
+            
+            while (weapList.firstChild) {
+                weapList.removeChild(weapList.firstChild);
+            }
+            
+            if (typeof characters[charSelect.value].weapon === "string") {
+                addWeaponSpecific(characters[charSelect.value].weapon);
+            }
+            else {
+                for (let c = 0; c < characters[charSelect.value].weapon.length; c++) {
+                    addWeaponSpecific(characters[charSelect.value].weapon[c]);
+                }
+            }
+            
+            const spellList = document.querySelector('#spellList');
+            
+            while (spellList.firstChild) {
+                spellList.removeChild(spellList.firstChild);
+            }
+            
+            if (typeof characters[charSelect.value].spellList === "string") {
+                addSpellSpecific(characters[charSelect.value].spellList);
+            }
+            else {
+                for (let c = 0; c < characters[charSelect.value].spellList.length; c++) {
+                    addSpellSpecific(characters[charSelect.value].spellList[c]);
+                }
+            }
+        }
+    }
+
+    const handleResponse = (xhr, parseResponse) => {
+        const content = document.querySelector('#content');
+        
+        switch(xhr.status) {
+            case 200:
+                //content.innerHTML = `<b>Success</b>`;
+                break;
+            case 201:
+                content.innerHTML = `<b>Character Created!</b>`;
+                break;
+            case 204:
+                content.innerHTML = `<b>Character Updated!</b>`;
+                break;
+            case 400:
+                content.innerHTML = `<b>At least a name is required.</b>`;
+                break;
+            case 404:
+                content.innerHTML = `<b>Resource Not Found</b>`;
+                break;
+            default:
+                content.innerHTML = `Error code not implemented by client.`;
+                break;
+        }
+        
+        if (parseResponse) {
+            const obj = JSON.parse(xhr.response);
+            console.dir(obj);
+        }
+        else {
+            console.log('received');
+        }
+        
+        parseJSON(xhr, content);
+    };
+
+    const sendPost = (e, nameForm) => {
+        const nameAction = nameForm.getAttribute('action');
+        const nameMethod = nameForm.getAttribute('method');
+        
+        const nameField = nameForm.querySelector('#nameField');
+        const strField = nameForm.querySelector('#strField');
+        const dexField = nameForm.querySelector('#dexField');
+        const conField = nameForm.querySelector('#conField');
+        const intField = nameForm.querySelector('#intField');
+        const wisField = nameForm.querySelector('#wisField');
+        const chaField = nameForm.querySelector('#chaField');
+        const maxHpField = nameForm.querySelector('#maxHpField');
+        const curHpField = nameForm.querySelector('#curHpField');
+        const acField = nameForm.querySelector('#acField');
+        const initField = nameForm.querySelector('#initField');
+        const speedField = nameForm.querySelector('#speedField');
+        const classField = nameForm.querySelector('#classField');
+        const lvlField = nameForm.querySelector('#lvlField');
+        const raceField = nameForm.querySelector('#raceField');
+        const alignField = nameForm.querySelector('#alignField');
+        const inventory = new Array();
+        
+        let invItems = document.getElementsByClassName('invItem');
+        for (let a = 0; a < invItems.length; a++) {
+            inventory.push(invItems[a].value);
+        }
+        
+        const weapons = new Array();
+        
+        let weaponList = document.getElementsByClassName('weapon');
+        for (let a = 0; a < weaponList.length; a++) {
+            weapons.push(weaponList[a].value);
+        }
+        
+        const spells = new Array();
+        
+        let spellList = document.getElementsByClassName('spell');
+        for (let a = 0; a < spellList.length; a++) {
+            spells.push(spellList[a].value);
+        }
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open(nameMethod, nameAction);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onload = () => handleResponse(xhr);
+        
+        const formData = `name=${nameField.value}&str=${strField.value}&dex=${dexField.value}&con=${conField.value}&int=${intField.value}&wis=${wisField.value}&cha=${chaField.value}&maxHp=${maxHpField.value}&curHp=${curHpField.value}&ac=${acField.value}&init=${initField.value}&speed=${speedField.value}&inventory=${inventory}&class=${classField.value}&lvl=${lvlField.value}&race=${raceField.value}&align=${alignField.value}&weapon=${weapons}&spellList=${spells}`;
+        
+        xhr.send(formData);
+        
+        parseJSON(xhr, document.querySelector('#content'));
+        
+        e.preventDefault();
+        return false;
+    };
+
+    const requestUpdate = (e, characterForm) => {
+        const url = '/getCharacters';
+        const method = 'get';
+        
+        const xhr = new XMLHttpRequest();
+        
+        xhr.open(method, url);
+        xhr.setRequestHeader('Accept', 'application/json');
+        
+        if (method == 'get') {
+            xhr.onload = () => handleResponse(xhr, true);
+        }
+        else {
+            xhr.onload = () => handleResponse(xhr, false);
+        }
+        
+        xhr.send();
+        
+        e.preventDefault();
+        return false;
+    };
+
+    //Parts of this function taken from: https://www.w3schools.com/howto/howto_js_close_list_items.asp
+    let addItem = () => {
+        const invList = document.querySelector('#invList');
+        const item = document.querySelector('#itemToAdd');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="invItem" type="text" value="${item.value}" name="inventory"/><span class="close" style="float:right;">X</span>`;
+        invList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        item.value = "";
+        //console.dir(closebtns);
+    };
+
+    let addItemSpecific = (item) => {
+        const invList = document.querySelector('#invList');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="invItem" type="text" value="${item}" name="inventory"/><span class="close" style="float:right;">X</span>`;
+        invList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        //console.dir(closebtns);
+    };
+
+    let addWeapon = () => {
+        const weapList = document.querySelector('#weapList');
+        const weaponName = document.querySelector('#weapName');
+        const weaponToHit = document.querySelector('#weapToHit');
+        const weaponDamType = document.querySelector('#weapDamType');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="weapon" type="text" value="${weaponName.value} +${weaponToHit.value} ${weaponDamType.value}" name="weapon"/><span class="close" style="float:right;">X</span>`;
+        weapList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        weaponName.value = "";
+        weaponToHit.value = "";
+        weaponDamType.value = "";
+        //console.dir(closebtns);
+    };
+
+    let addWeaponSpecific = (weapon) => {
+        const weapList = document.querySelector('#weapList');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="weapon" type="text" value="${weapon}" name="weapon"/><span class="close" style="float:right;">X</span>`;
+        weapList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        //console.dir(closebtns);
+    };
+
+    let addSpell = () => {
+        const spellList = document.querySelector('#spellList');
+        const spellLvl = document.querySelector('#spellLvl');
+        const spellName = document.querySelector('#spellName');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="spell" type="text" value="${spellLvl.value}  ${spellName.value}" name="spellList"/><span class="close" style="float:right;">X</span>`;
+        spellList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        spellLvl.value = "";
+        spellName.value = "";
+        //console.dir(closebtns);
+    };
+
+    let addSpellSpecific = (spell) => {
+        const spellList = document.querySelector('#spellList');
+        
+        let el = document.createElement("li");
+        el.innerHTML = `<input class="spell" type="text" value="${spell}" name="spellList"/><span class="close" style="float:right;">X</span>`;
+        spellList.appendChild(el);
+        //console.dir('Added to Inventory');
+        let closebtns = document.getElementsByClassName("close");
+        let i;
+        
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function() {
+                this.parentElement.remove();
+            });
+        }
+        //console.dir(closebtns);
+    };
+
+    const init = () => {
+        const nameForm = document.querySelector('#nameForm');
+        const characterForm = document.querySelector('#characterForm');
+        document.querySelector('#invAdder').addEventListener("click", addItem);
+        document.querySelector('#weapAdder').addEventListener("click", addWeapon);
+        document.querySelector('#spellAdder').addEventListener("click", addSpell);
+        
+        const addCharacter = (e) => sendPost(e, nameForm);
+        nameForm.addEventListener('submit', addCharacter);
+        
+        const getCharacter = (e) => requestUpdate(e, characterForm);
+        characterForm.addEventListener('submit', getCharacter);
+        
+        getCharacter();
+    };
+
+    window.onload = init;
+  </script>
+</head>
+<body>
+  <section id="top">
+    <h1>D&D Character Creator</h1>
+    <section id="content">
+    </section>
+    <form id="characterForm" action="/getCharacters" method="get">
+      <select id="characterSelect"></select>
+      <input type="submit" value="Load Character" />
+    </form>
+    <form id="nameForm" action="/addCharacter" method="post">
+      <label for="name">Name: </label>
+      <input id="nameField" type="text" name="name" /> 
+      <input type="submit" value="Save Character" /> <br />
+    <div id="classDiv">
+      <h2>Character Stats</h2>
+      <label>Class: </label>
+      <input id="classField" type="text" name="class" /><br/>
+      <label>Level: </label>
+      <input id="lvlField" type="number" name="lvl" class="statField" min="0" max="99"/><br/>
+      <label>Race: </label>
+      <input id="raceField" type="text" name="race" /><br/>
+      <label>Alignment: </label>
+      <input id="alignField" type="text" name="align" /><br/>
+    </div>
+    <div id="statsDiv">
+      <h2>Stats</h2>
+      <label>Str: </label>
+      <input id="strField" type="number" name="str" class="statField" min="-99" max="99"/><br/>
+      <label>Dex: </label>
+      <input id="dexField" type="number" name="dex" class="statField" min="-99" max="99"/><br/>
+      <label>Con: </label>
+      <input id="conField" type="number" name="con" class="statField" min="-99" max="99"/><br/>
+      <label>Int: </label>
+      <input id="intField" type="number" name="int" class="statField" min="-99" max="99"/><br/>
+      <label>Wis: </label>
+      <input id="wisField" type="number" name="wis" class="statField" min="-99" max="99"/><br/>
+      <label>Cha: </label>
+      <input id="chaField" type="number" name="cha" class="statField" min="-99" max="99"/><br/>
+    </div>
+    <div id="hpDiv">
+      <h2>Hit Points</h2>
+      <label>Maximum HP: </label>
+      <input id="maxHpField" type="number" name="maxHp" min="-999" max="999" /><br/>
+      <label>Current HP: </label>
+      <input id="curHpField" type="number" name="curHp" min="-999" max="999"/><br/>
+    </div>
+    <div id="fightDiv">
+      <h2>Combat Stats</h2>
+      <label>Armor Class: </label>
+      <input id="acField" type="number" name="ac" class="statField" min="-99" max="99"/><br/>
+      <label>Initiative: </label>
+      <input id="initField" type="number" name="init" class="statField" min="-99" max="99"/><br/>
+      <label>Speed: </label>
+      <input id="speedField" type="number" name="speed" class="statField" min="-99" max="99"/><br/>
+    </div>
+    <div id="invDiv">
+      <h2>Inventory</h2>
+        <input id="itemToAdd" type="text" />
+        <input id="invAdder" type="button" value="Add Item" />
+      <ul id="invList"></ul>
+    </div>
+    <div id="weapDiv">
+      <h2>Weapons</h2>
+        <label>Weapon: </label>
+        <input id="weapName" type="text" /><br/>
+        <label>Chance To Hit: </label>
+        <input id="weapToHit" type="number" /><br/>
+        <label>Damage Dice: </label>
+        <input id="weapDamType" type="text" /><br/>
+        <input id="weapAdder" type="button" value="Add Weapon" />
+      <ul id="weapList"></ul>
+    </div>
+    <div id="spellDiv">
+      <h2>Spell List</h2>
+        <label>Spell Level: </label>
+        <input id="spellLvl" type="text" /><br/>
+        <label>Spell Name: </label>
+        <input id="spellName" type="text" /><br/>
+        <input id="spellAdder" type="button" value="Add Spell" />
+      <ul id="spellList"></ul>
+    </div>
+    </form>
+  </section>
+</body>
+</html>

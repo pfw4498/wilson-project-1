@@ -1,0 +1,30 @@
+{
+  "name": "http-api-assignment",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.10.0",
+    "npm": "6.2.0"
+  },
+  "description": "Http api assignment",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfw4498/http-api-assignment.git"
+  },
+  "author": "Parker Wilson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pfw4498/http-api-assignment/issues"
+  },
+  "homepage": "https://github.com/pfw4498/http-api-assignment#readme",
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}

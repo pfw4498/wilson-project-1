@@ -1,0 +1,117 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+    margin-bottom: 8px;
+    margin-right: 4px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1em;
+    margin-top: -3px;
+}
+
+#classDiv {
+    margin-top: 10px;
+    float: left;
+    padding: 5px;
+    border: 1px solid black;
+    font-size: 1.2em;
+}
+
+#statsDiv {
+    margin-top: 10px;
+    float: left;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid black;
+    font-size: 1.2em;
+}
+
+.statField {
+    width: 50px;
+    font-size: 1.2em;
+}
+
+.close {
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+#hpDiv {
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    float: left;
+}
+
+#maxHpField {
+    width: 60px;
+    margin-left: 8px;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+#curHpField {
+    width: 60px;
+    margin-left: 8px;
+    padding: 5px;
+    font-size: 1.2em;
+    float: right;
+}
+
+#fightDiv {
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    float: left;
+}
+
+#invDiv {
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    float: left;
+}
+
+#weapDiv {
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    float: left;
+}
+
+#spellDiv {
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    float: left;
+}
+
+#top {
+    margin: 10px;
+}
+
+#top h1 {
+  font-size: 2em;
+}
+
+#content {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
