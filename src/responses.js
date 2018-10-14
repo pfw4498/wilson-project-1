@@ -21,7 +21,7 @@ const respondJSONMeta = (request, response, status) => {
 
 const getCharacters = (request, response) => {
   const responseJSON = {
-    characters,
+    characters
   };
 
   return respondJSON(request, response, 200, responseJSON);
@@ -67,21 +67,21 @@ const addCharacter = (request, response, body) => {
     characters[body.name].inventory = body.inventory;
   }
   else {
-    characters[body.name].inventory = [""];
+    characters[body.name].inventory = [];
   }
-    
+
   if (body.weapon) {
     characters[body.name].weapon = body.weapon;
   }
   else {
-    characters[body.name].weapon = [""];
+    characters[body.name].weapon = [];
   }
-    
+
   if (body.spellList) {
     characters[body.name].spellList = body.spellList;
   }
   else {
-    characters[body.name].spellList = [""];
+    characters[body.name].spellList = [];
   }
 
   if (responseCode === 201) {

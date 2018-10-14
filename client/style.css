@@ -3,11 +3,44 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  background-color: #d1d1d1;
+}
+
+#characterForm {
+    margin-left: 10px;
+}
+
+#name {
+    margin-left: 10px;
 }
 
 input {
     margin-bottom: 8px;
     margin-right: 4px;
+}
+
+input[type=button] {
+    font-family: 'Bree serif', 'serif';
+}
+
+#spellAdder, #weapAdder, #invAdder {
+    font-family: 'Bree Serif', 'serif';
+    background-color: #00409b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+    float: right;
+}
+
+#spellAdder:hover, #weapAdder:hover, #invAdder:hover {
+    background-color: #002559;
+}
+
+#spellAdder:active, #weapAdder:active, #invAdder:active {
+    background-color: #002559;
+    transform: translateY(4px);
 }
 
 h2 {
@@ -16,12 +49,94 @@ h2 {
     margin-top: -3px;
 }
 
+#loadBtn {
+    font-family: 'Bree Serif', 'serif';
+    background-color: #00409b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+#loadBtn:hover {
+    background-color: #002559;
+}
+
+#loadBtn:active {
+    background-color: #002559;
+    transform: translateY(4px);
+}
+
+#clearBtn {
+    font-family: 'Bree Serif', 'serif';
+    background-color: #db3b3b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+#clearBtn:hover {
+    background-color: #7a1f1f;
+}
+
+#clearBtn:active {
+    background-color: #7a1f1f;
+    transform: translateY(4px);
+}
+
+#saveBtn {
+    font-family: 'Bree Serif', 'serif';
+    background-color: #009b05;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+#saveBtn:hover {
+    background-color: #005602;
+}
+
+#saveBtn:active {
+    background-color: #005602;
+    transform: translateY(4px);
+}
+
+#titleDiv {
+    font-size: 2.5em;
+    text-align: left;
+    background-color: #632e2b;
+    color: white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: 'Bree Serif', 'serif';
+}
+
+#charSheetTitle {
+    text-align: center;
+    font-size: 2em;
+}
+
+#charSheetDiv {
+    border: 1px solid black;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Righteous', 'serif';
+}
+
 #classDiv {
     margin-top: 10px;
     float: left;
     padding: 5px;
     border: 1px solid black;
     font-size: 1.2em;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #statsDiv {
@@ -31,6 +146,7 @@ h2 {
     margin-left: 10px;
     border: 1px solid black;
     font-size: 1.2em;
+    box-shadow: 7px 7px 7px grey;
 }
 
 .statField {
@@ -50,6 +166,7 @@ h2 {
     font-size: 1.2em;
     border: 1px solid black;
     float: left;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #maxHpField {
@@ -74,6 +191,7 @@ h2 {
     font-size: 1.2em;
     border: 1px solid black;
     float: left;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #invDiv {
@@ -83,6 +201,7 @@ h2 {
     font-size: 1.2em;
     border: 1px solid black;
     float: left;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #weapDiv {
@@ -92,6 +211,7 @@ h2 {
     font-size: 1.2em;
     border: 1px solid black;
     float: left;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #spellDiv {
@@ -101,17 +221,11 @@ h2 {
     font-size: 1.2em;
     border: 1px solid black;
     float: left;
-}
-
-#top {
-    margin: 10px;
-}
-
-#top h1 {
-  font-size: 2em;
+    box-shadow: 7px 7px 7px grey;
 }
 
 #content {
   font-size: 1.8em;
   margin-bottom: 10px;
+  font-family: 'Bree serif', 'serif';
 }

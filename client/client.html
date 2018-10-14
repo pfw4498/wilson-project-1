@@ -4,17 +4,20 @@
 <head>
   <title>Wilson D&D Character Creator</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
     var characterList;
     var inventory;
+    //parseJSON function goes through the character list if that's returned, then loads in their stats for the user to see
     const parseJSON = (xhr, content) => {
         const obj = JSON.parse(xhr.response);
         //console.dir(obj);
         
         if (obj.message) {
-            content.innerHTML = content.innerHTML + `<p>Message: ${obj.message}</p>`;
+            //content.innerHTML = content.innerHTML + `<p>Message: ${obj.message}</p>`;
         }
         
         if (obj.characters) {
@@ -33,56 +36,41 @@
                 }
             }
             
-            const nameField = nameForm.querySelector('#nameField');
+            const nameField = document.querySelector('#nameField');
             nameField.value = characters[charSelect.value].name;
-            
-            const strField = nameForm.querySelector('#strField');
+            const strField = document.querySelector('#strField');
             strField.value = characters[charSelect.value].str;
-            
-            const dexField = nameForm.querySelector('#dexField');
+            const dexField = document.querySelector('#dexField');
             dexField.value = characters[charSelect.value].dex;
-            
-            const conField = nameForm.querySelector('#conField');
+            const conField = document.querySelector('#conField');
             conField.value = characters[charSelect.value].con;
-            
-            const intField = nameForm.querySelector('#intField');
+            const intField = document.querySelector('#intField');
             intField.value = characters[charSelect.value].int;
-            
-            const wisField = nameForm.querySelector('#wisField');
+            const wisField = document.querySelector('#wisField');
             wisField.value = characters[charSelect.value].wis;
-            
-            const chaField = nameForm.querySelector('#chaField');
+            const chaField = document.querySelector('#chaField');
             chaField.value = characters[charSelect.value].cha;
-            
-            const maxHpField = nameForm.querySelector('#maxHpField');
+            const maxHpField = document.querySelector('#maxHpField');
             maxHpField.value = characters[charSelect.value].maxHp;
-            
-            const curHpField = nameForm.querySelector('#curHpField');
+            const curHpField = document.querySelector('#curHpField');
             curHpField.value = characters[charSelect.value].curHp;
-            
-            const acField = nameForm.querySelector('#acField');
+            const acField = document.querySelector('#acField');
             acField.value = characters[charSelect.value].ac;
-            
-            const initField = nameForm.querySelector('#initField');
+            const initField = document.querySelector('#initField');
             initField.value = characters[charSelect.value].init;
-            
-            const speedField = nameForm.querySelector('#speedField');
+            const speedField = document.querySelector('#speedField');
             speedField.value = characters[charSelect.value].speed;
-            
-            const classField = nameForm.querySelector('#classField');
+            const classField = document.querySelector('#classField');
             classField.value = characters[charSelect.value].class;
-            
-            const lvlField = nameForm.querySelector('#lvlField');
+            const lvlField = document.querySelector('#lvlField');
             lvlField.value = characters[charSelect.value].lvl;
-            
-            const raceField = nameForm.querySelector('#raceField');
+            const raceField = document.querySelector('#raceField');
             raceField.value = characters[charSelect.value].race;
-            
-            const alignField = nameForm.querySelector('#alignField');
+            const alignField = document.querySelector('#alignField');
             alignField.value = characters[charSelect.value].align;
             
+            //The three list elements for the character clear out, then load in however many items are stored
             const invList = document.querySelector('#invList');
-            
             while (invList.firstChild) {
                 invList.removeChild(invList.firstChild);
             }
@@ -97,7 +85,6 @@
             }
             
             const weapList = document.querySelector('#weapList');
-            
             while (weapList.firstChild) {
                 weapList.removeChild(weapList.firstChild);
             }
@@ -112,7 +99,6 @@
             }
             
             const spellList = document.querySelector('#spellList');
-            
             while (spellList.firstChild) {
                 spellList.removeChild(spellList.firstChild);
             }
@@ -127,7 +113,8 @@
             }
         }
     }
-
+    
+    //Responses are handled and messages are output, then parseJSON is called
     const handleResponse = (xhr, parseResponse) => {
         const content = document.querySelector('#content');
         
@@ -154,35 +141,36 @@
         
         if (parseResponse) {
             const obj = JSON.parse(xhr.response);
-            console.dir(obj);
+            //console.dir(obj);
         }
         else {
-            console.log('received');
+            //console.log('received');
         }
         
         parseJSON(xhr, content);
     };
-
+    
+    //This function sends the body to the server
     const sendPost = (e, nameForm) => {
         const nameAction = nameForm.getAttribute('action');
         const nameMethod = nameForm.getAttribute('method');
         
-        const nameField = nameForm.querySelector('#nameField');
-        const strField = nameForm.querySelector('#strField');
-        const dexField = nameForm.querySelector('#dexField');
-        const conField = nameForm.querySelector('#conField');
-        const intField = nameForm.querySelector('#intField');
-        const wisField = nameForm.querySelector('#wisField');
-        const chaField = nameForm.querySelector('#chaField');
-        const maxHpField = nameForm.querySelector('#maxHpField');
-        const curHpField = nameForm.querySelector('#curHpField');
-        const acField = nameForm.querySelector('#acField');
-        const initField = nameForm.querySelector('#initField');
-        const speedField = nameForm.querySelector('#speedField');
-        const classField = nameForm.querySelector('#classField');
-        const lvlField = nameForm.querySelector('#lvlField');
-        const raceField = nameForm.querySelector('#raceField');
-        const alignField = nameForm.querySelector('#alignField');
+        const nameField = document.querySelector('#nameField');
+        const strField = document.querySelector('#strField');
+        const dexField = document.querySelector('#dexField');
+        const conField = document.querySelector('#conField');
+        const intField = document.querySelector('#intField');
+        const wisField = document.querySelector('#wisField');
+        const chaField = document.querySelector('#chaField');
+        const maxHpField = document.querySelector('#maxHpField');
+        const curHpField = document.querySelector('#curHpField');
+        const acField = document.querySelector('#acField');
+        const initField = document.querySelector('#initField');
+        const speedField = document.querySelector('#speedField');
+        const classField = document.querySelector('#classField');
+        const lvlField = document.querySelector('#lvlField');
+        const raceField = document.querySelector('#raceField');
+        const alignField = document.querySelector('#alignField');
         const inventory = new Array();
         
         let invItems = document.getElementsByClassName('invItem');
@@ -210,7 +198,10 @@
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onload = () => handleResponse(xhr);
         
+        //Parameters are sent through the url containing the information that must be stored per character
         const formData = `name=${nameField.value}&str=${strField.value}&dex=${dexField.value}&con=${conField.value}&int=${intField.value}&wis=${wisField.value}&cha=${chaField.value}&maxHp=${maxHpField.value}&curHp=${curHpField.value}&ac=${acField.value}&init=${initField.value}&speed=${speedField.value}&inventory=${inventory}&class=${classField.value}&lvl=${lvlField.value}&race=${raceField.value}&align=${alignField.value}&weapon=${weapons}&spellList=${spells}`;
+        
+        //console.dir(formData);
         
         xhr.send(formData);
         
@@ -220,6 +211,7 @@
         return false;
     };
 
+    //requestUpdate gets the characters stored in memory
     const requestUpdate = (e, characterForm) => {
         const url = '/getCharacters';
         const method = 'get';
@@ -238,11 +230,67 @@
         
         xhr.send();
         
-        e.preventDefault();
+        if (e !== undefined) {
+            e.preventDefault();
+        }
+        
         return false;
+    };
+    
+    //clearAll finds all fields and resets their values, for quickly creating a new character
+    const clearAll = () => {
+        const nameField = document.querySelector('#nameField');
+        nameField.value = "";
+        const strField = document.querySelector('#strField');
+        strField.value = "";
+        const dexField = document.querySelector('#dexField');
+        dexField.value = "";
+        const conField = document.querySelector('#conField');
+        conField.value = "";
+        const intField = document.querySelector('#intField');
+        intField.value = "";
+        const wisField = document.querySelector('#wisField');
+        wisField.value = "";
+        const chaField = document.querySelector('#chaField');
+        chaField.value = "";
+        const maxHpField = document.querySelector('#maxHpField');
+        maxHpField.value = "";
+        const curHpField = document.querySelector('#curHpField');
+        curHpField.value = "";
+        const acField = document.querySelector('#acField');
+        acField.value = "";
+        const initField = document.querySelector('#initField');
+        initField.value = "";
+        const speedField = document.querySelector('#speedField');
+        speedField.value = "";
+        const classField = document.querySelector('#classField');
+        classField.value = "";
+        const lvlField = document.querySelector('#lvlField');
+        lvlField.value = "";
+        const raceField = document.querySelector('#raceField');
+        raceField.value = "";
+        const alignField = document.querySelector('#alignField');
+        alignField.value = "";
+        
+        const invList = document.querySelector('#invList');
+        while (invList.firstChild) {
+            invList.removeChild(invList.firstChild);
+        }
+        
+        const weapList = document.querySelector('#weapList');
+        while (weapList.firstChild) {
+            weapList.removeChild(weapList.firstChild);
+        }
+        
+        const spellList = document.querySelector('#spellList');
+        while (spellList.firstChild) {
+            spellList.removeChild(spellList.firstChild);
+        }
     };
 
     //Parts of this function taken from: https://www.w3schools.com/howto/howto_js_close_list_items.asp
+    //addItem adds an 'li' element to the inventory list with a close button to remove it from that list
+    // this works the same for adding spells and weapons or attack moves
     let addItem = () => {
         const invList = document.querySelector('#invList');
         const item = document.querySelector('#itemToAdd');
@@ -262,7 +310,8 @@
         item.value = "";
         //console.dir(closebtns);
     };
-
+    
+    //The 'addSpecific' functions are for loading the character stats exactly how they were typed in by the user who saved that character
     let addItemSpecific = (item) => {
         const invList = document.querySelector('#invList');
         
@@ -363,12 +412,14 @@
         //console.dir(closebtns);
     };
 
+    //init function sets some listeners
     const init = () => {
         const nameForm = document.querySelector('#nameForm');
         const characterForm = document.querySelector('#characterForm');
         document.querySelector('#invAdder').addEventListener("click", addItem);
         document.querySelector('#weapAdder').addEventListener("click", addWeapon);
         document.querySelector('#spellAdder').addEventListener("click", addSpell);
+        document.querySelector('#clearBtn').addEventListener("click", clearAll);
         
         const addCharacter = (e) => sendPost(e, nameForm);
         nameForm.addEventListener('submit', addCharacter);
@@ -383,18 +434,22 @@
   </script>
 </head>
 <body>
-  <section id="top">
-    <h1>D&D Character Creator</h1>
+ <div id="titleDiv">
+    <h3>D&D Character Creator</h3>
+ </div>
     <section id="content">
     </section>
     <form id="characterForm" action="/getCharacters" method="get">
       <select id="characterSelect"></select>
-      <input type="submit" value="Load Character" />
+      <input id="loadBtn" type="submit" value="Load Character" />
     </form>
     <form id="nameForm" action="/addCharacter" method="post">
-      <label for="name">Name: </label>
+      <label id="name" for="name" style="font-family:'Righteous','serif';">Name: </label>
       <input id="nameField" type="text" name="name" /> 
-      <input type="submit" value="Save Character" /> <br />
+      <input id="saveBtn" type="submit" value="Save Character" /> 
+      <input id="clearBtn" type="button" value="Clear Stats" /><br />
+<div id="charSheetDiv">
+    <h1 id="charSheetTitle">Character Sheet</h1>
     <div id="classDiv">
       <h2>Character Stats</h2>
       <label>Class: </label>
@@ -451,7 +506,7 @@
         <input id="weapToHit" type="number" /><br/>
         <label>Damage Dice: </label>
         <input id="weapDamType" type="text" /><br/>
-        <input id="weapAdder" type="button" value="Add Weapon" />
+        <input id="weapAdder" type="button" value="Add Weapon" /><br/>
       <ul id="weapList"></ul>
     </div>
     <div id="spellDiv">
@@ -460,10 +515,10 @@
         <input id="spellLvl" type="text" /><br/>
         <label>Spell Name: </label>
         <input id="spellName" type="text" /><br/>
-        <input id="spellAdder" type="button" value="Add Spell" />
+        <input id="spellAdder" type="button" value="Add Spell" /><br/>
       <ul id="spellList"></ul>
     </div>
     </form>
-  </section>
+</div>
 </body>
 </html>
